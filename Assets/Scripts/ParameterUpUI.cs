@@ -1,4 +1,4 @@
-namespace DefaultNamespace
+namespace VGADestroy
 {
     public class ParameterUpUI
     {
