@@ -6,6 +6,7 @@ namespace VGADestroy.Item
 {
     public enum ItemType
     {
+        None,
         SpeedUp,
         SpeedDown,
         PowerUp,
