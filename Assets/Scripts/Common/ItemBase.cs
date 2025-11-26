@@ -5,7 +5,7 @@ using VGADestroy.Item;
 namespace VGADestroy.Common
 {
     // アイテムの基底クラス
-    public abstract class ItemBase : MonoBehaviour
+    public abstract class ItemBase : PoolableObject
     {
         protected ItemData.ItemDataList ItemData;
         public ItemData.ItemDataList DataSO;
@@ -23,7 +23,16 @@ namespace VGADestroy.Common
                 ItemData = DataSO;
             }
         }
-        
+
+        public void OnCollisionEnter(Collision other)
+        {
+            // Playerなら消す
+            if(!other.gameObject.CompareTag("Player"))
+                return;
+            // Objectがなくなるときにこのオブジェクトを返却する
+            ReturnToPool();
+        }
+
         public abstract void Apply(PlayerStatus playerStatus);
 
         public ItemData.ItemDataList Pick()
