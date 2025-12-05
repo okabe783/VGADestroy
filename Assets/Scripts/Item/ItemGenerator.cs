@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using VGADestroy.Item.Poisson;
 using Random = UnityEngine.Random;
 
 namespace VGADestroy.Item
@@ -16,13 +18,19 @@ namespace VGADestroy.Item
         private int _poolSize = 96;
         [Header("Itemの生成数の調査時間"),SerializeField]
         private float _spawnInterval = 0.2f;
+        [Header("アイテムの生成距離"), SerializeField]
+        private float _minDistance = 1.0f;
+        [SerializeField]
+        private Vector3 _regionSize = new(50, 0, 50);
         
         private ObjectPool<PoolableObject> _pool;
         private CancellationTokenSource _cts;
+        private List<Vector3> _spawnPoints;
 
         private void Start()
         {
             _cts = new CancellationTokenSource();
+            _spawnPoints = Poisson2D.GeneratePoisson2D(_minDistance, new Vector2(_regionSize.x, _regionSize.z));
             _pool = new ObjectPool<PoolableObject>(_itemPrefab, initialCount: _poolSize / _itemPrefab.Length, transform.parent);
             MonitorLoop().Forget();
         }
@@ -39,7 +47,10 @@ namespace VGADestroy.Item
                     // 不足数の計算
                     int need = Mathf.Max(0,_poolSize - _pool.ActiveCount);
 
-                    if (need <= 0) continue;
+                    if (need <= 0)
+                    {
+                        continue;
+                    }
                     
                     for (int i = 0; i < need; i++)
                     {
@@ -53,10 +64,17 @@ namespace VGADestroy.Item
         // Itemの生成処理
         private void CreateItem()
         {
-            // PoolからItemを取り出す
+            if (_spawnPoints == null || _spawnPoints.Count == 0)
+            {
+                Debug.LogError("ポイント地点がありません");
+                return;
+            }
+
+            Vector3 localPos = _spawnPoints[Random.Range(0, _spawnPoints.Count)];
+            localPos.y = 0f;
+
             PoolableObject obj = _pool.GetObject();
-            // ToDo : 生成位置を調整する
-            obj.transform.position = Random.insideUnitSphere;
+            obj.transform.position = transform.position + localPos;
         }
     }
 }

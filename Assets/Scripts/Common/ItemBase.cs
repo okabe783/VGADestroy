@@ -29,6 +29,9 @@ namespace VGADestroy.Common
             // Playerなら消す
             if(!other.gameObject.CompareTag("Player"))
                 return;
+            
+            Debug.Log("Hit: " + other.gameObject.name);
+            Apply(other.gameObject.GetComponent<PlayerStatus>());
             // Objectがなくなるときにこのオブジェクトを返却する
             ReturnToPool();
         }

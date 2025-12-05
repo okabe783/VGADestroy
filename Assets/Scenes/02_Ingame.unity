@@ -53340,6 +53340,29 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &905842686 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6916866046855650339, guid: 19d5dce821df8994095174c1a24cc349, type: 3}
+  m_PrefabInstance: {fileID: 4438051638689123158}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &905842689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 905842686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6644f10ef7b14f8c97667b58c704e7dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _itemPrefab:
+  - {fileID: 7784510062589309284, guid: 0edb2b6d647782742bc0a71b9c55d94c, type: 3}
+  _poolSize: 20
+  _spawnInterval: 0.2
+  _minDistance: 1
+  _regionSize: {x: 30, y: 0, z: 30}
 --- !u!43 &909087725
 Mesh:
   m_ObjectHideFlags: 0
@@ -127517,6 +127540,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 6451291915451860678, guid: d60452aab3a2e7f4aa6b7ce9ac70fe69, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -127570,22 +127597,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5990951849746405172, guid: 19d5dce821df8994095174c1a24cc349, type: 3}
-      propertyPath: _itemPrefab
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5990951849746405172, guid: 19d5dce821df8994095174c1a24cc349, type: 3}
-      propertyPath: _itemPrefab.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5990951849746405172, guid: 19d5dce821df8994095174c1a24cc349, type: 3}
-      propertyPath: '_itemPrefab.Array.data[0]'
-      value: 
-      objectReference: {fileID: 3840689277420891152, guid: 0edb2b6d647782742bc0a71b9c55d94c, type: 3}
-    - target: {fileID: 5990951849746405172, guid: 19d5dce821df8994095174c1a24cc349, type: 3}
-      propertyPath: '_itemPrefab.Array.data[1]'
-      value: 
-      objectReference: {fileID: 4448837990012022711, guid: 0edb2b6d647782742bc0a71b9c55d94c, type: 3}
     - target: {fileID: 6916866046855650339, guid: 19d5dce821df8994095174c1a24cc349, type: 3}
       propertyPath: m_Name
       value: ItemGenerator
@@ -127593,7 +127604,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6916866046855650339, guid: 19d5dce821df8994095174c1a24cc349, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 905842689}
   m_SourcePrefab: {fileID: 100100000, guid: 19d5dce821df8994095174c1a24cc349, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

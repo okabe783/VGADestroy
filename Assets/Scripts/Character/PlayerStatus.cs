@@ -9,11 +9,13 @@ namespace VGADestroy.Character
 
         public void AddSpeed(float value)
         {
+            Debug.Log("Adding Speed");
             _speed += value;
         }
 
         public void AddPower(float value)
         {
+            Debug.Log("Adding Power");
             _power += value;
         }
     }
