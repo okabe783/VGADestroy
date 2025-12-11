@@ -121,6 +121,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1e195fc70d7440e8cf7ffbc6be969d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ItemData:
+    ItemType: 1
+    Speed: 0
+    Power: 0
   DataSO:
     ItemType: 1
     Speed: 5

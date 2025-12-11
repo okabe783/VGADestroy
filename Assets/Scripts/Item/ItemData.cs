@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace VGADestroy.Item
 {
@@ -14,8 +13,7 @@ namespace VGADestroy.Item
     }
     
     // Itemのパラメーターを設定する
-    [CreateAssetMenu(fileName = "Item", menuName = "ItemData", order = 0)]
-    public class ItemData : ScriptableObject
+    public class ItemData
     {
         public List<ItemDataList>  Items;
         

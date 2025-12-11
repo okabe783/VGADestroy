@@ -9,7 +9,7 @@ namespace VGADestroy.Item
         public override void Apply(PlayerStatus playerStatus)
         {
             // PlayerStatusに効果を渡す
-            playerStatus.AddSpeed(ItemData.Speed);
+            playerStatus.AddSpeed(DataSO.Speed);
         }
     }
 }
