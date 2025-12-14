@@ -1,5 +1,5 @@
+using System;
 using UnityEngine;
-using VGADestroy.Common;
 
 namespace VGADestroy.Character
 {
@@ -7,12 +7,18 @@ namespace VGADestroy.Character
     public class PlayerController : MonoBehaviour
     {
         [SerializeField] private PlayerStatus _playerStatus;
-        
+        [SerializeField] private PlayerMove _playerMove;
+
         private Rigidbody _rb;
 
         private void Awake()
         {
             _rb = GetComponent<Rigidbody>();
+        }
+
+        private void FixedUpdate()
+        {
+            _playerMove.Move(_playerStatus.Speed,_playerStatus.TurnSpeed,_playerStatus.TurnSmooth);
         }
     }
 }

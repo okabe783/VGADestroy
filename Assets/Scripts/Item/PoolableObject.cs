@@ -5,6 +5,7 @@ namespace VGADestroy.Item
 {
     public class PoolableObject : MonoBehaviour
     {
+        // オブジェクトが非アクティブになった時にプールに戻すためのイベント
         public Action<PoolableObject> OnReturnedToPool;
 
         /// <summary>

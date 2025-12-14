@@ -15,12 +15,11 @@ namespace VGADestroy.Common
             if(!other.gameObject.CompareTag("Player"))
                 return;
             
-            Debug.Log("Hit: " + other.gameObject.name);
             Apply(other.gameObject.GetComponent<PlayerStatus>());
             // Objectがなくなるときにこのオブジェクトを返却する
             ReturnToPool();
         }
 
-        public abstract void Apply(PlayerStatus playerStatus);
+        protected abstract void Apply(PlayerStatus playerStatus);
     }
 }

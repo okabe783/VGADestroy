@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4784949085324669210}
   - component: {fileID: 7784510062589309284}
   m_Layer: 0
-  m_Name: Item
+  m_Name: SpeedUpItem
   m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -121,11 +121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1e195fc70d7440e8cf7ffbc6be969d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemData:
-    ItemType: 1
-    Speed: 0
-    Power: 0
   DataSO:
     ItemType: 1
-    Speed: 5
+    Speed: 2
     Power: 0

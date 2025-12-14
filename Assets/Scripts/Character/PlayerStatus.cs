@@ -4,18 +4,33 @@ namespace VGADestroy.Character
 {
     public class PlayerStatus : MonoBehaviour
     {
-        [SerializeField] private float _speed;
         [SerializeField] private float _power;
+        
+        [Header("Move Settings")]
+        [SerializeField] 
+        private float _moveSpeed = 5f;
+        [SerializeField]
+        private float _turnSpeed = 120f;
+        
+        [Header("Smooth Settings")] 
+        [SerializeField]
+        private float _turnSmooth = 8f;
+
+        // イベントを発行してアイテムはそれを発火する
+        public float Speed => _moveSpeed;
+        public float Power => _power;
+
+        public float TurnSpeed => _turnSpeed;
+
+        public float TurnSmooth => _turnSmooth;
 
         public void AddSpeed(float value)
         {
-            Debug.Log("Adding Speed");
-            _speed += value;
+            _moveSpeed += value;
         }
 
         public void AddPower(float value)
         {
-            Debug.Log("Adding Power");
             _power += value;
         }
     }
