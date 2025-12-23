@@ -6,6 +6,11 @@ namespace Talk
     {
         public string TalkID;
         public List<TalkNode> TalkNodes = new();
+
+        public TalkNode GetNode(int nodeID)
+        {
+            return TalkNodes[nodeID];
+        }
     }
 
     public class TalkNode
