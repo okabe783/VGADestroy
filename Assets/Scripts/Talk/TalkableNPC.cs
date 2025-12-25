@@ -4,11 +4,12 @@ namespace Talk
 {
     public class TalkableNPC : MonoBehaviour, ITalkable
     {
-        [SerializeField] private string _talkID;
+        [SerializeField] private int _talkID;
+        [SerializeField] private TalkData _talkData;
         
         public void Talk()
         {
-            // ToDo : ここにTalkManagerにアクセスして会話をスタートさせる
+            TalkSystem.I.TalkManager.StartTalk(_talkData,_talkID);
         }
     }
 }
