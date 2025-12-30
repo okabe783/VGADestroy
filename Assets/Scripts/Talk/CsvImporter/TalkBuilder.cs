@@ -1,51 +1,112 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Talk.ExcelData
 {
     public class TalkBuilder
     {
-        public TalkData Build(string talkID, List<TalkRow> rows)
+        public Dictionary<string, TalkData> BuildAll(List<TalkRow> rows)
         {
-            // 最初にインスタンスを生成する
-            TalkData talkData = new()
-            {
-                TalkID = talkID,
-                TalkNodes = new List<TalkNode>()
-            };
-            
-            // NodeIDからTalkNodeの対応表
-            Dictionary<int,TalkNode> nodeMap = new();
-            
+            Dictionary<string, TalkData> map = new();
+
             foreach (TalkRow row in rows)
             {
-                int nodeID = int.Parse(row.NodeID);
-                
-                // Nodeがなければ生成する
-                if (!nodeMap.TryGetValue(nodeID, out TalkNode node))
+                if (!int.TryParse(row.NodeID, out int nodeID))
+                {
+                    Debug.LogWarning($"Invalid NodeID: {row.NodeID}");
+                    continue;
+                }
+
+                if (!map.TryGetValue(row.TalkID, out TalkData talkData))
+                {
+                    talkData = new TalkData
+                    {
+                        TalkID = row.TalkID,
+                        NodeMap = new Dictionary<int, TalkNode>()
+                    };
+                    map.Add(row.TalkID, talkData);
+                }
+
+                if (!talkData.NodeMap.TryGetValue(nodeID, out TalkNode node))
                 {
                     node = new TalkNode
                     {
                         NodeID = nodeID,
                         Speaker = row.Speaker,
-                        Text = row.Text,
-                        Choices = new List<TalkChoice>(),
-                        Rewards = new List<TalkReward>()
+                        Text = row.BodyText,
+                        Choices = new List<TalkChoice>()
                     };
-                    
-                    nodeMap.Add(nodeID, node);
-                    talkData.TalkNodes.Add(node);
+                    talkData.NodeMap.Add(nodeID, node);
                 }
-                
-                // Choiceがあれば追加
-                if (!string.IsNullOrEmpty(row.JumpNodeID))
+
+                if (string.IsNullOrEmpty(row.ChoiceText)) continue;
+
+                if (!int.TryParse(row.JumpNodeID, out int jumpNodeID))
                 {
-                    node.Choices.Add(new TalkChoice
-                    {
-                        Text = row.Text,
-                        JumpNodeID = int.Parse(row.JumpNodeID)
-                    });
-                } 
+                    Debug.LogWarning($"Invalid JumpNodeID: {row.JumpNodeID}");
+                    continue;
+                }
+
+                node.Choices.Add(new TalkChoice
+                {
+                    Text = row.ChoiceText,
+                    JumpNodeID = jumpNodeID
+                });
             }
+
+            return map;
+        }
+
+        public TalkData Build(string talkID, List<TalkRow> rows)
+        {
+            TalkData talkData = new()
+            {
+                TalkID = talkID,
+                NodeMap = new Dictionary<int, TalkNode>()
+            };
+
+            foreach (TalkRow row in rows)
+            {
+                if (!int.TryParse(row.NodeID, out int nodeID))
+                {
+                    Debug.LogWarning($"[TalkBuilder] Invalid NodeID: {row.NodeID}");
+                    continue;
+                }
+
+                // Node がなければ生成
+                if (!talkData.NodeMap.TryGetValue(nodeID, out TalkNode node))
+                {
+                    node = new TalkNode
+                    {
+                        NodeID = nodeID,
+                        Speaker = row.Speaker,
+                        Text = row.BodyText,
+                        Choices = new List<TalkChoice>()
+                    };
+
+                    talkData.NodeMap.Add(nodeID, node);
+                }
+
+                // Choice行の場合
+                if (string.IsNullOrEmpty(row.ChoiceText)) continue;
+                if (!int.TryParse(row.JumpNodeID, out int jumpNodeID))
+                {
+                    Debug.LogWarning($"[TalkBuilder] Invalid JumpNodeID: {row.JumpNodeID}");
+                    continue;
+                }
+
+                node.Choices.Add(new TalkChoice
+                {
+                    Text = row.ChoiceText,
+                    JumpNodeID = jumpNodeID
+                });
+            }
+
+            Debug.Log(
+                $"[TalkBuilder] Build Complete\n" +
+                $" TalkID    : {talkData.TalkID}\n" +
+                $" NodeCount: {talkData.NodeMap.Count}"
+            );
 
             return talkData;
         }

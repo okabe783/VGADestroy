@@ -5,10 +5,12 @@ namespace Talk.ExcelData
 {
     public class TalkRow
     {
-        public string NodeID;
-        public string Speaker;
-        public string Text;
-        public string JumpNodeID;
+        public string TalkID; // 会話ID（test_npc_001）
+        public string NodeID; // ノードID（0, 10, 20）
+        public string Speaker; // NPC / Player / Choice
+        public string BodyText; // ノード本文（NPCセリフ）
+        public string ChoiceText; // 選択肢テキスト
+        public string JumpNodeID; // 遷移先ノード
         public string RewardKind;
         public string RewardID;
         public string Amount;
@@ -19,39 +21,39 @@ namespace Talk.ExcelData
     {
         public List<TalkRow> Import(string csvText)
         {
-            List<TalkRow> row = new();
-            StringReader dataReader = new(csvText);
+            List<TalkRow> rows = new();
+            StringReader reader = new(csvText);
 
-            // csvの1行目は読み飛ばす
-            string line = dataReader.ReadLine();
+            // 1行目：#TalkID,test_npc_001
+            reader.ReadLine();
 
-            if (string.IsNullOrEmpty(line)) return row;
-            
-            // 2行目以降のデータ
             while (true)
             {
-                string data = dataReader.ReadLine();
-                if(data == null) break;
-                
-                if(string.IsNullOrEmpty(data)) continue;
-                
-                string[] cols = data.Split(',');
-                
-                TalkRow talkRow = new()
+                string line = reader.ReadLine();
+                if (line == null) break;
+                if (string.IsNullOrEmpty(line)) continue;
+
+                string[] cols = line.Split(',');
+
+                TalkRow row = new()
                 {
-                    NodeID     = Get(cols, 0),
-                    Speaker    = Get(cols, 1),
-                    Text       = Get(cols, 2),
-                    JumpNodeID = Get(cols, 3),
-                    RewardKind = Get(cols, 4),
-                    RewardID   = Get(cols, 5),
-                    Amount     = Get(cols, 6),
+                    TalkID = Get(cols, 0),
+                    NodeID = Get(cols, 1),
+                    Speaker = Get(cols, 2),
+                    BodyText = Get(cols, 3),
+                    ChoiceText = Get(cols, 4),
+                    JumpNodeID = Get(cols, 5),
+                    RewardKind = Get(cols, 6),
+                    RewardID = Get(cols, 7),
+                    Amount = Get(cols, 8),
                 };
-                
-                row.Add(talkRow);
+
+                rows.Add(row);
             }
-            return row;
+
+            return rows;
         }
+
 
         private string Get(string[] data, int index)
         {

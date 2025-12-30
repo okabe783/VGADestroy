@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using Talk.ExcelData;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -7,37 +8,24 @@ namespace Talk
 {
     public class TalkDataLoader
     {
-        private Dictionary<string, TalkData> talkMap = new ();
-
         // ここでトークデータを一括読み込み
-        public void LoadAll(string talkID,string url)
+        public async UniTask<Dictionary<string, TalkData>> LoadFromUrl(string url)
         {
-            TalkCsvImporter importer = new();
-            TalkBuilder builder = new();
-
-            // csvの読み込み
             using UnityWebRequest req = UnityWebRequest.Get(url);
-            req.SendWebRequest();
-            
-            while (!req.isDone){ }
+            await req.SendWebRequest();
 
             if (req.result != UnityWebRequest.Result.Success)
             {
                 Debug.LogError(req.error);
-                return;
+                return null;
             }
-            
-            string csvText = req.downloadHandler.text;
-            // Build
-            // IDを照合
-            List<TalkRow> rows = importer.Import(csvText);
-            TalkData talkData = builder.Build(talkID, rows);
-            talkMap[talkID] = talkData;
+
+            TalkCsvImporter importer = new();
+            List<TalkRow> rows = importer.Import(req.downloadHandler.text);
+
+            TalkBuilder builder = new();
+            return builder.BuildAll(rows);
         }
 
-        public TalkData Get(string talkID)
-        {
-            return talkMap[talkID];
-        }
     }
 }

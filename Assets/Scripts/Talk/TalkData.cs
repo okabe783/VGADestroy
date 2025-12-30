@@ -1,15 +1,20 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Talk
 {
     public class TalkData
     {
         public string TalkID;
-        public List<TalkNode> TalkNodes = new();
+        public Dictionary<int, TalkNode> NodeMap = new();
 
         public TalkNode GetNode(int nodeID)
         {
-            return TalkNodes[nodeID];
+            if (NodeMap.TryGetValue(nodeID, out var node))
+                return node;
+
+            Debug.LogError($"[TalkData] NodeID {nodeID} not found");
+            return null;
         }
     }
 

@@ -7,6 +7,7 @@ namespace VGADestroy.Character
     public class PlayerMove : MonoBehaviour
     {
         [SerializeField] private PlayerStatus _playerStatus;
+        [SerializeField] private PlayerController _playerController;
 
         [SerializeField, Header("Rotation Settings")]
         private float _rotationSpeed = 720f;
@@ -17,8 +18,6 @@ namespace VGADestroy.Character
         [Header("Animation Settings")] [SerializeField]
         private Animator _animator;
 
-        private InputSystem_Actions _inputAction;
-
         private Camera _mainCamera;
         private Vector2 _moveInput;
         private Rigidbody _rb;
@@ -26,25 +25,10 @@ namespace VGADestroy.Character
         // AnimationHash
         private static readonly int Run = Animator.StringToHash("Run");
 
-        private void Awake()
-        {
-            _inputAction = new InputSystem_Actions();
-            _inputAction.Player.Move.performed += OnMove;
-            _inputAction.Player.Move.canceled += OnMove;
-        }
-
-        private void OnEnable()
-        {
-            _inputAction.Enable();
-        }
-
-        private void OnDisable()
-        {
-            _inputAction.Dispose();
-        }
-
         private void Start()
         {
+            _playerController.Action.Player.Move.performed += OnMove;
+            _playerController.Action.Player.Move.canceled += OnMove;
             _rb = GetComponent<Rigidbody>();
             _rb.freezeRotation = true;
             _mainCamera = Camera.main;
