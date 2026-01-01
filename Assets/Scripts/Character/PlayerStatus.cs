@@ -8,15 +8,19 @@ namespace VGADestroy.Character
         
         [Header("Move Settings")]
         [SerializeField] 
-        private float _moveSpeed = 5f;
+        private float _moveSpeed = 2f;
         [SerializeField]
         private float _turnSpeed = 120f;
+        [SerializeField]
+        private float _dashSpeed = 8f;
 
         // イベントを発行してアイテムはそれを発火する
         public float Speed => _moveSpeed;
         public float Power => _power;
 
         public float TurnSpeed => _turnSpeed;
+
+        public float DashSpeed => _dashSpeed;
 
         public void AddSpeed(float value)
         {

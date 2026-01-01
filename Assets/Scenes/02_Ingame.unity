@@ -15279,8 +15279,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _nameText: {fileID: 1744314606}
   _contentText: {fileID: 588462683}
-  _choiceButton: {fileID: 1761378097847310085, guid: e7252dc1d80b8f54aa3a1072caada0cc, type: 3}
+  _choiceButtonPrefab: {fileID: 1761378097847310085, guid: e7252dc1d80b8f54aa3a1072caada0cc, type: 3}
   _choiceRoot: {fileID: 1651974852}
+  _canvasGroup: {fileID: 699555336}
+  _fadeDuration: 0.25
 --- !u!114 &278437944
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15295,6 +15297,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _talkView: {fileID: 278437943}
   _url: 'https://docs.google.com/spreadsheets/d/1D4rKfb6SM1MT8JK0vKqpQrhCGrU6aE92BidKg219sIo/export?format=csv&gid=0 '
+  _reTalkLockTime: 0.2
 --- !u!4 &278437945
 Transform:
   m_ObjectHideFlags: 0
@@ -30521,6 +30524,7 @@ MonoBehaviour:
   _power: 0
   _moveSpeed: 2
   _turnSpeed: 120
+  _dashSpeed: 5
 --- !u!114 &520019066
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30547,9 +30551,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerStatus: {fileID: 520019065}
   _playerController: {fileID: 520019066}
-  _rotationSpeed: 720
-  _isStop: 0
   _animator: {fileID: 520019061}
+  _rotationSpeed: 720
 --- !u!114 &520019068
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42195,6 +42198,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 699555335}
+  - component: {fileID: 699555336}
   m_Layer: 5
   m_Name: Talk
   m_TagString: Untagged
@@ -42224,6 +42228,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &699555336
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 699555334}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!43 &701880756
 Mesh:
   m_ObjectHideFlags: 0
